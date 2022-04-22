@@ -1,6 +1,7 @@
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import kotlinx.browser.document
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.renderComposable
@@ -29,19 +30,20 @@ val sortedCards: List<Card> = Suit.values().flatMap { suit -> (0..12).map { Card
 //val cardsSorted: List<Card> = (0..12).map{ Card("Heart", it+1) } + (13..25).map{ Card("Diamond", it-12) } + (26..38).map{ Card("Club", it-25) } + (39..51).map{ Card("Spade", it-38) }
 var cards: MutableList<Card> = sortedCards.toMutableList().also { it.shuffle() }
 
-
 fun main() {
-    cards.forEach { console.log("${it.suit}\t${it.name}") }
+    console.log("%c Welcome in Poker! ", "color: white; font-weight: bold; background-color: green;")
+    //cards.forEach { console.log("${it.suit}\t${it.name}") }
 
+    document.getElementById("Poker_root")?.setAttribute("style", "background-color: green;")
     renderComposable(rootElementId = "Poker_root") {
-        Div({ style { padding(25.px) } }) {
+        Div({ style { backgroundColor(Color.green); padding(25.px) } }) {
             Table {
                 for (i in 0..51) {
                     Tr {
                         Td({
-                            style { border(5.px, LineStyle.Solid, Color.cyan); textAlign("center") }
+                            style { border(2.px, LineStyle.Solid, Color.black); backgroundColor(Color.white); textAlign("center") }
                         }) {
-                            Text("${sortedCards[i].suit}-${sortedCards[i].name}")
+                            Text("${cards[i].suit}-${cards[i].name}")
                         }
                     }
                 }
